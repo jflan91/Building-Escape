@@ -1,0 +1,11 @@
+*/Binaries
+*/Intermediate
+*/Saved
+*/Build
+*/DerivedDataCache
+
+BuildingEscape1/Content/StarterContent/
+
+*.VC.db
+
+BuildingEscape1/.vs/BuildingEscape1/v15/Browse.VC.opendb
