@@ -19,6 +19,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 protected:
+	void OpenDoor();
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
@@ -28,6 +29,9 @@ private:
 	
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* PressurePlate;
+
+	UPROPERTY(EditAnywhere)
+    AActor* ActorThatOpens;
 
 		
 	
