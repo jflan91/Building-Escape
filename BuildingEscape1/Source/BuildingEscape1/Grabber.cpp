@@ -78,7 +78,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	}
 }
 
-///Ray-cast and return physics body hit
+
 const FHitResult UGrabber::GetFirstPhysicsBodyInReach()
 {
 	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
