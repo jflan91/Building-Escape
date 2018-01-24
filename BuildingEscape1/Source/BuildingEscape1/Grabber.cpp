@@ -25,18 +25,51 @@ void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UE_LOG(LogTemp, Warning, TEXT("Grabber reporting for duty!"));
 	///Look for attached Physics Handle
+	FindPhysicsComponent();
+
+	FindInputComponent();
+}
+
+void UGrabber::FindInputComponent()
+{
+	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+
+	if (InputComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Input Component Found."))
+			///Bind the input axis
+			InputComponent->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
+		InputComponent->BindAction("Grab", IE_Released, this, &UGrabber::Release);
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("%s is missing Input Component."), *GetOwner()->GetName())
+	}
+}
+
+void UGrabber::FindPhysicsComponent()
+{
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 	if (PhysicsHandle)
 	{
 
 	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Physics Handle %s was not found."), *GetOwner()->GetName());
+	else {
+		UE_LOG(LogTemp, Error, TEXT("%s is missing Physics Handle Component."), *GetOwner()->GetName());
 	}
 }
+
+void UGrabber::Grab() {
+	UE_LOG(LogTemp, Warning, TEXT("Control Pressed"));
+	//TODO Attach Physics Handle
+	GetFirstPhysicsBodyInReach();
+}
+
+void UGrabber::Release() {
+	UE_LOG(LogTemp, Warning, TEXT("Control released"));
+	//TODO Release Physics Handle
+}
+
 
 
 // Called every frame
@@ -44,11 +77,21 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	//if the physics handle is attached
+		//move the object that is held
+
+
+
+
+}
+
+const FHitResult UGrabber::GetFirstPhysicsBodyInReach()
+{
 	FVector PlayerViewPointLocation;
 	FRotator PlayerViewPointRotation;
 
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerViewPointLocation, OUT PlayerViewPointRotation);
-	
+
 	/*UE_LOG(LogTemp, Warning, TEXT("Location: %s, Rotation: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString())*/
 
 	FVector LineTraceEnd = PlayerViewPointLocation + (PlayerViewPointRotation.Vector() * Reach);
@@ -68,7 +111,6 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Player has touched: %s"), *Name->GetName());
 	}
+	return Hit;
 }
-
-
 
