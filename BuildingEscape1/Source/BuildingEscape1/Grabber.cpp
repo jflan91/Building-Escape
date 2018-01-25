@@ -53,6 +53,7 @@ void UGrabber::Grab()
 	auto ComponentToGrab = HitResult.GetComponent();
 	auto ActorHit = HitResult.GetActor();
 	///attach a physics handle
+	if (!PhysicsHandle) { return; };
 	if (ActorHit) 
 	{
 		PhysicsHandle->GrabComponent(ComponentToGrab, NAME_None, ComponentToGrab->GetOwner()->GetActorLocation(), true/*allow rotation*/ );
@@ -64,6 +65,7 @@ void UGrabber::Grab()
 void UGrabber::Release() 
 {
 	UE_LOG(LogTemp, Warning, TEXT("Control released"));
+	if (!PhysicsHandle) { return; }
 	PhysicsHandle->ReleaseComponent();
 }
 
@@ -72,6 +74,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	///move grabbed component
+	if (!PhysicsHandle) { return; };
 	if (PhysicsHandle->GrabbedComponent)
 	{
 		PhysicsHandle->SetTargetLocation(GetReachLineEnd());

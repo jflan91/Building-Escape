@@ -30,10 +30,10 @@ private:
 
 	float LastDoorOpenTime;
 	float GetTotalMassOfActorsOnPlate();
-	AActor* Owner;
+	AActor* Owner = nullptr;
 
 	UPROPERTY(EditAnywhere)
-	ATriggerVolume* PressurePlate;
+	ATriggerVolume* PressurePlate = nullptr;
 
 
 		
