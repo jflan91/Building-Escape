@@ -29,7 +29,7 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere)
-	float TriggerMass = 30.f;
+	float TriggerMass = 50.f;
 	
 	float GetTotalMassOfActorsOnPlate();
 	AActor* Owner = nullptr;
